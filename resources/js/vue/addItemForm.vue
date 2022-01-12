@@ -1,7 +1,7 @@
 <template>
     <div class="addItem">
-        <input type="text" />
-        <font-awesome-icon icon="plus-square" @click="addItem()" :class="[item.name ? 'active' : 'inactive', 'plus']" />
+        <input v-model="item.name" type="text" />
+        <font-awesome-icon icon="plus-square" @click="addItem()" :class="item.name ? 'active' : 'inactive'" class='plus'/>
     </div>
 </template>
 

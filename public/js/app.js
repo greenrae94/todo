@@ -30451,10 +30451,30 @@ var render = function () {
     "div",
     { staticClass: "addItem" },
     [
-      _c("input", { attrs: { type: "text" } }),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.item.name,
+            expression: "item.name",
+          },
+        ],
+        attrs: { type: "text" },
+        domProps: { value: _vm.item.name },
+        on: {
+          input: function ($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.item, "name", $event.target.value)
+          },
+        },
+      }),
       _vm._v(" "),
       _c("font-awesome-icon", {
-        class: [_vm.item.name ? "active" : "inactive", "plus"],
+        staticClass: "plus",
+        class: _vm.item.name ? "active" : "inactive",
         attrs: { icon: "plus-square" },
         on: {
           click: function ($event) {
