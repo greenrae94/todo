@@ -1,6 +1,6 @@
 <template>
     <div class="addItem">
-        <input v-model="item.name" type="text" />
+        <input v-model="item.name" type="text" @keyup.enter="addItem()" />
         <font-awesome-icon 
             icon="plus-square" 
             @click="addItem()" 

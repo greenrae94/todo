@@ -30773,6 +30773,15 @@ var render = function () {
         attrs: { type: "text" },
         domProps: { value: _vm.item.name },
         on: {
+          keyup: function ($event) {
+            if (
+              !$event.type.indexOf("key") &&
+              _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+            ) {
+              return null
+            }
+            return _vm.addItem()
+          },
           input: function ($event) {
             if ($event.target.composing) {
               return
