@@ -1,7 +1,11 @@
 <template>
     <div class="addItem">
         <input v-model="item.name" type="text" />
-        <font-awesome-icon icon="plus-square" @click="addItem()" :class="item.name ? 'active' : 'inactive'" class='plus'/>
+        <font-awesome-icon 
+            icon="plus-square" 
+            @click="addItem()" 
+            :class="[item.name ? 'active' : 'inactive', 'plus']"
+        />
     </div>
 </template>
 
@@ -26,6 +30,7 @@ export default {
             .then( response =>{
                 if (response.status == 201) {
                     this.item.name = "";
+                    this.$emit('reloadlist');
                 }
             })
             .catch( error => {
