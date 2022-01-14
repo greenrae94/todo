@@ -6,8 +6,11 @@
             v-model="item.completed"
         />
         <span :class="[item.completed ? 'completed' : '', 'itemText']"> {{ item.name }} </span>
+        <button @click="editItem()" class="edit">
+            <font-awesome-icon :icon="['fas', 'edit']" />
+        </button>
         <button @click="removeItem()" class="trashcan" >
-            <font-awesome-icon icon="trash" />
+            <font-awesome-icon :icon="['fas', 'trash']" />
         </button>
     </div>
 </template>
@@ -17,7 +20,7 @@ export default{
     props: ['item'],
     methods: {
         updateCheck() {
-            axios.put('api/item/' + this.item.id, {
+            axios.put('api/item/' + this.item.id, { 
                 item: this.item
             })
             .then( response => {
@@ -39,6 +42,9 @@ export default{
             .catch ( error => {
                 console.log( error );
             })
+        },
+        editItem() {
+            
         }
     }
 }
@@ -62,6 +68,12 @@ export default{
     background: #e6e6e6;
     border: none;
     color: #FF0000;
+    outline: none;
+}
+.edit {
+    background: #e6e6e6;
+    border: none;
+    color: dodgerblue;
     outline: none;
 }
 </style>
