@@ -69,11 +69,23 @@ export default{
     border: none;
     color: #FF0000;
     outline: none;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}
+.trashcan:hover{
+    background: #acacac;
+    outline: grey;
+    outline-style: solid;
 }
 .edit {
     background: #e6e6e6;
     border: none;
     color: dodgerblue;
     outline: none;
+}
+.edit:hover{
+    background: #acacac;
+    outline: grey;
+    outline-style: solid;
 }
 </style>

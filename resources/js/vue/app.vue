@@ -1,7 +1,7 @@
 <template>
     <div class="todoListContainer">
         <div class="heading">
-            <h2 id="title">Todo List</h2>
+            <h1 id="title">Todo List</h1>
             <add-item-form 
                 v-on:reloadlist="getList()" 
             />
@@ -46,7 +46,7 @@ export default {
 
 <style scoped>
 .todoListContainer {
-    width: 350px;
+    width: 80%;
     margin: auto;
 }
 
