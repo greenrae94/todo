@@ -1,23 +1,39 @@
 <template>
-    <div class="item">
-        <input
-            type="checkbox"
-            @change="updateCheck()"
-            v-model="item.completed"
+<div>
+    <list-item-view
+        :item='item'
+
+    />
+    <list-item-edit
+    />
+
+
+    <div class="editItem" v-show="isEditing" @keyup.enter="updateEdit(); deactiveEditngMode();">
+        <input v-model="item.name" type="text" />
+        <font-awesome-icon 
+        icon="plus-square"
+        @click="updateEdit(); deactiveEditngMode();"
+        :class="[item.name ? 'active' : 'inactive', 'plus']"
         />
-        <span :class="[item.completed ? 'completed' : '', 'itemText']"> {{ item.name }} </span>
-        <button @click="editItem()" class="edit">
-            <font-awesome-icon :icon="['fas', 'edit']" />
-        </button>
-        <button @click="removeItem()" class="trashcan" >
-            <font-awesome-icon :icon="['fas', 'trash']" />
-        </button>
     </div>
+</div>
 </template>
 
 <script>
+import listItemView from "./listItemView.vue";
+import listItemEdit from "./listItemEdit.vue"
+
 export default{
     props: ['item'],
+    data() {
+        return {
+            isEditing: false
+        }
+    },
+    components:{
+        listItemView,
+        listItemEdit
+    },
     methods: {
         updateCheck() {
             axios.put('api/item/' + this.item.id, { 
@@ -43,49 +59,32 @@ export default{
                 console.log( error );
             })
         },
-        editItem() {
-            
+        activateEditingMode(){
+            this.isEditing = true;
+        },
+        deactiveEditngMode(){
+            this.isEditing = false;
+        },
+        updateEdit(){
+            if( this.item.name == '') {
+                return;
+            }
+            axios.put('api/item/' + this.item.id, {
+                item: this.item
+            })
+            .then( response => {
+                if( response.status == 200 ){
+                    this.$emit('itemupdated');
+                }
+            })
+            .catch( error => {
+                console.log( error );
+            })
         }
     }
 }
 </script>
 
 <style scoped>
-.completed {
-    text-decoration: line-through;
-    color: #999999;
-}
-.itemText{
-    width: 100%;
-    margin-left: 20px;
-}
-.item {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.trashcan {
-    background: #e6e6e6;
-    border: none;
-    color: #FF0000;
-    outline: none;
-    margin-left: 0.5em;
-    margin-right: 0.5em;
-}
-.trashcan:hover{
-    background: #acacac;
-    outline: grey;
-    outline-style: solid;
-}
-.edit {
-    background: #e6e6e6;
-    border: none;
-    color: dodgerblue;
-    outline: none;
-}
-.edit:hover{
-    background: #acacac;
-    outline: grey;
-    outline-style: solid;
-}
+
 </style>
