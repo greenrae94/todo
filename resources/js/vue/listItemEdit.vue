@@ -1,6 +1,6 @@
 <template>
     <div class="edit">
-        <input v-model="item.name" type="text" />
+        <input v-model="item.name" type="text" @keyup.enter="updateEdit()"/>
         <font-awesome-icon 
             icon="plus-square" 
             @click="updateEdit()"
@@ -17,13 +17,13 @@ export default {
             if( this.item.name == '') {
                 return;
             }
-            
             axios.put('api/item/' + this.item.id, {
                 item: this.item
             })
             .then( response => {
                 if( response.status == 200){
                     this.$emit('itemupdated');
+                    this.$emit('activateedit');
                 }
             })
             .catch( error => {

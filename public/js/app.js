@@ -12275,17 +12275,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['item'],
   components: {
     listItemView: _listItemView_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    ListItemEdit: _listItemEdit_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+    listItemEdit: _listItemEdit_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      isEditing: false
+    };
   },
   methods: {
     updateItem: function updateItem() {
       this.$emit('itemchanged');
+    },
+    activateEdit: function activateEdit() {
+      if (this.isEditing) {
+        this.isEditing = false;
+      } else {
+        this.isEditing = true;
+      }
     }
   }
 });
@@ -12329,6 +12345,8 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         if (response.status == 200) {
           _this.$emit('itemupdated');
+
+          _this.$emit('activateedit');
         }
       })["catch"](function (error) {
         console.log(error);
@@ -12394,7 +12412,9 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
-    editItem: function editItem() {}
+    editItem: function editItem() {
+      this.$emit('activateedit');
+    }
   }
 });
 
@@ -31192,16 +31212,23 @@ var render = function () {
   return _c(
     "div",
     [
-      _c("list-item-view", { attrs: { item: _vm.item } }),
-      _vm._v(" "),
-      _c("list-item-edit", {
-        attrs: { item: _vm.item },
-        on: {
-          itemupdated: function ($event) {
-            return _vm.updateItem()
-          },
-        },
-      }),
+      _vm.isEditing
+        ? _c("list-item-edit", {
+            attrs: { item: _vm.item },
+            on: {
+              itemupdated: function ($event) {
+                _vm.updateItem(), _vm.activateEdit()
+              },
+            },
+          })
+        : _c("list-item-view", {
+            attrs: { item: _vm.item },
+            on: {
+              activateedit: function ($event) {
+                return _vm.activateEdit()
+              },
+            },
+          }),
     ],
     1
   )
@@ -31245,6 +31272,15 @@ var render = function () {
         attrs: { type: "text" },
         domProps: { value: _vm.item.name },
         on: {
+          keyup: function ($event) {
+            if (
+              !$event.type.indexOf("key") &&
+              _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+            ) {
+              return null
+            }
+            return _vm.updateEdit()
+          },
           input: function ($event) {
             if ($event.target.composing) {
               return

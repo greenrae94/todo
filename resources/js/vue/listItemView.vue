@@ -44,7 +44,7 @@ export default {
             })
         },
         editItem(){
-
+            this.$emit('activateedit');
         }
     }
 }

@@ -1,28 +1,44 @@
 <template>
     <div>
-        <list-item-view
-            :item="item" 
-        />
         <list-item-edit
+            v-if="isEditing"
             :item="item"
-            v-on:itemupdated="updateItem()"
+            v-on:itemupdated="updateItem(), activateEdit()"
         />
+        <list-item-view
+            v-else
+            :item="item"
+            v-on:activateedit="activateEdit()"
+        />
+        
     </div>
 </template>
 
 <script>
-import ListItemEdit from './listItemEdit.vue'
+import listItemEdit from './listItemEdit.vue'
 import listItemView from './listItemView.vue'
 
 export default {
-    props:['item'],
-    components:{
+    props:['item'],  
+    components: {
         listItemView,
-        ListItemEdit
+        listItemEdit
+    },
+    data() {
+        return{
+            isEditing: false
+        }
     },
     methods:{
         updateItem(){
             this.$emit('itemchanged');
+        },
+        activateEdit(){
+            if (this.isEditing){
+                this.isEditing = false;
+            }else{
+                this.isEditing = true;
+            }
         }
     }
     
