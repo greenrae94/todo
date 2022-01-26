@@ -3,12 +3,12 @@
         <list-item-edit
             v-if="isEditing"
             :item="item"
-            v-on:itemupdated="updateItem(), activateEdit()"
+            v-on:itemupdated="updateItem(), toggleEdit()"
         />
         <list-item-view
             v-else
             :item="item"
-            v-on:activateedit="activateEdit()"
+            v-on:toggleedit="toggleEdit()"
         />
         
     </div>
@@ -33,7 +33,7 @@ export default {
         updateItem(){
             this.$emit('itemchanged');
         },
-        activateEdit(){
+        toggleEdit(){
             if (this.isEditing){
                 this.isEditing = false;
             }else{

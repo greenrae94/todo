@@ -25,7 +25,7 @@ export default {
             })
             .then( response => {
                 if( response.status == 200 ){
-                    this.$emit('itemchanged');
+                    this.$emit('itemupdated');
                 }
             })
             .catch( error => {
@@ -36,7 +36,7 @@ export default {
             axios.delete('api/item/' + this.item.id)
             .then( response => {
                 if( response.status == 200 ){
-                    this.$emit('itemchanged');
+                    this.$emit('itemupdated');
                 }
             })
             .catch ( error => {
@@ -44,7 +44,7 @@ export default {
             })
         },
         editItem(){
-            this.$emit('activateedit');
+            this.$emit('toggleedit');
         }
     }
 }

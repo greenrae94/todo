@@ -23,7 +23,7 @@ export default {
             .then( response => {
                 if( response.status == 200){
                     this.$emit('itemupdated');
-                    this.$emit('activateedit');
+                    this.$emit('toggleedit');
                 }
             })
             .catch( error => {

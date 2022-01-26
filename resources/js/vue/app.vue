@@ -8,7 +8,7 @@
         </div>
         <list-view 
             :items="items" 
-            v-on:reloadlist="getList()" 
+            v-on:reloadlist="getList()"
         />
     </div>
 </template>

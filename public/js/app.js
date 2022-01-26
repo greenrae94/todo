@@ -12296,7 +12296,7 @@ __webpack_require__.r(__webpack_exports__);
     updateItem: function updateItem() {
       this.$emit('itemchanged');
     },
-    activateEdit: function activateEdit() {
+    toggleEdit: function toggleEdit() {
       if (this.isEditing) {
         this.isEditing = false;
       } else {
@@ -12346,7 +12346,7 @@ __webpack_require__.r(__webpack_exports__);
         if (response.status == 200) {
           _this.$emit('itemupdated');
 
-          _this.$emit('activateedit');
+          _this.$emit('toggleedit');
         }
       })["catch"](function (error) {
         console.log(error);
@@ -12395,7 +12395,7 @@ __webpack_require__.r(__webpack_exports__);
         item: this.item
       }).then(function (response) {
         if (response.status == 200) {
-          _this.$emit('itemchanged');
+          _this.$emit('itemupdated');
         }
       })["catch"](function (error) {
         console.log(error);
@@ -12406,14 +12406,14 @@ __webpack_require__.r(__webpack_exports__);
 
       axios["delete"]('api/item/' + this.item.id).then(function (response) {
         if (response.status == 200) {
-          _this2.$emit('itemchanged');
+          _this2.$emit('itemupdated');
         }
       })["catch"](function (error) {
         console.log(error);
       });
     },
     editItem: function editItem() {
-      this.$emit('activateedit');
+      this.$emit('toggleedit');
     }
   }
 });
@@ -31217,15 +31217,15 @@ var render = function () {
             attrs: { item: _vm.item },
             on: {
               itemupdated: function ($event) {
-                _vm.updateItem(), _vm.activateEdit()
+                _vm.updateItem(), _vm.toggleEdit()
               },
             },
           })
         : _c("list-item-view", {
             attrs: { item: _vm.item },
             on: {
-              activateedit: function ($event) {
-                return _vm.activateEdit()
+              toggleedit: function ($event) {
+                return _vm.toggleEdit()
               },
             },
           }),
